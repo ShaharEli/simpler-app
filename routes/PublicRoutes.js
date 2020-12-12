@@ -11,13 +11,16 @@ import {ThemeContext} from '../helpers';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+const headerFontColor = currentTheme === 'dark' ? '#FFFFFF' : 'black';
+
 const getHeaderStyle = (currentTheme) => ({
   headerStyle: {
     backgroundColor: currentTheme === 'dark' ? '#242526' : '#FFFFFF',
   },
   headerTitleStyle: {
-    color: currentTheme === 'dark' ? '#FFFFFF' : 'black',
+    color: headerFontColor,
   },
+  headerTintColor: headerFontColor,
 });
 
 export default function PublicRoutes() {
