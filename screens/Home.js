@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import {Modal, Button} from 'react-native-paper';
 import AddItem from '../components/AddItem';
 import Task from '../components/Task';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {NotificationsContext, getTimestamp} from '../helpers';
+import PushNotification from 'react-native-push-notification';
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
@@ -11,7 +13,7 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
+  const {notificationsConfig} = useContext(NotificationsContext);
   useEffect(() => {
     (async () => {
       try {
@@ -33,6 +35,37 @@ export default function Home() {
       await AsyncStorage.setItem('tasks', JSON.stringify([item, ...items]));
     } catch {}
   };
+
+  useEffect(() => {
+    PushNotification.cancelAllLocalNotifications();
+    if (items.length > 0) {
+      const dates = getTimestamp(
+        notificationsConfig.notifyHour,
+        notificationsConfig.days,
+      );
+      let important = 0;
+      for (let item of items) {
+        if (item.important) {
+          important++;
+        }
+      }
+      const importantMsg = important
+        ? `and ${important} of them are kind of important`
+        : '';
+      for (let date of dates) {
+        if (date.valueOf() > new Date().valueOf()) {
+          console.log(date);
+          PushNotification.localNotificationSchedule({
+            channelId: 'channel-id',
+            title: 'Simple notification',
+            message: `You got ${items.length} simple tasks left ${importantMsg}`, // (required)
+            date: date,
+          });
+        }
+      }
+    }
+  }, [items, notificationsConfig]);
+  // console.log(getTimestamp(20));
 
   const handleRemove = async (index) => {
     const previousItems = items.slice();
@@ -62,7 +95,7 @@ export default function Home() {
       </Modal>
       {!visible && (
         <Button style={{marginTop: 30}} onPress={showModal}>
-          Add Item
+          Add Task
         </Button>
       )}
     </HomeContainer>

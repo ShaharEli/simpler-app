@@ -16,7 +16,10 @@ import {Provider} from 'react-native-paper';
 
 const App = () => {
   const [currentTheme, setCurrentTheme] = useState('dark');
-  const [notificationsConfig, setNotificationsConfig] = useState({days: 1});
+  const [notificationsConfig, setNotificationsConfig] = useState({
+    days: 1,
+    notifyHour: 20,
+  });
 
   useEffect(() => {
     (async () => {
@@ -29,10 +32,7 @@ const App = () => {
           'notificationsConfig',
         );
         if (previousNotificationsConfig) {
-          setNotificationsConfig((prev) => ({
-            ...prev,
-            days: Number(previousNotificationsConfig.days),
-          }));
+          setNotificationsConfig(JSON.parse(previousNotificationsConfig));
         }
       } catch (err) {}
     })();
