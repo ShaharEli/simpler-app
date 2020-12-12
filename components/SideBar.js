@@ -5,7 +5,7 @@ import {Switch} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default function SideBar() {
+export default function SideBar({navigation}) {
   const {currentTheme, setCurrentTheme} = useContext(ThemeContext);
 
   const onToggleTheme = async () => {
@@ -28,8 +28,14 @@ export default function SideBar() {
   const getToggleIconColor = () =>
     currentTheme === 'dark' ? 'blue' : 'yellow';
 
+  const getLinkIconColor = () => (currentTheme === 'dark' ? 'white' : 'black');
+
   return (
     <SideBarContainer>
+      <Settings onPress={() => navigation.navigate('Settings')}>
+        <Icon size={28} name="settings" color={getLinkIconColor()} />
+        <Link>Settings</Link>
+      </Settings>
       <ThemeToggle>
         <Switch value={currentTheme === 'dark'} onValueChange={onToggleTheme} />
         <Icon
@@ -41,6 +47,23 @@ export default function SideBar() {
     </SideBarContainer>
   );
 }
+
+const Link = styled.Text`
+  color: ${({theme}) => theme.colors.font};
+  font-size: 23px;
+  margin-left: 10px;
+`;
+
+const Settings = styled.TouchableOpacity`
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  background-color: ${({theme}) => theme.colors.task};
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
 
 const SideBarContainer = styled.SafeAreaView`
   flex: 1;

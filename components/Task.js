@@ -1,30 +1,61 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Divider} from 'react-native-paper';
 import styled from 'styled-components';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {Animated, StyleSheet} from 'react-native';
+import {RectButton} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Feather';
 
-export default function Task({task}) {
+export default function Task({task, handleRemove, index}) {
+  const renderRightActions = (progress, dragX) => {
+    const trans = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [100, 0],
+    });
+
+    return (
+      <StyledRectButton onPress={() => handleRemove(index)}>
+        <Animated.View
+          style={[
+            {
+              transform: [{translateX: trans}],
+            },
+          ]}>
+          <Icon name="trash-2" size={35} color="red" />
+        </Animated.View>
+      </StyledRectButton>
+    );
+  };
+
   return (
-    <>
-      <TaskContainer>
-        <TaskTitle>{task.task}</TaskTitle>
+    <Swipeable renderLeftActions={renderRightActions}>
+      <TaskContainer important={task.important}>
+        <TaskTitle important={task.important}>{task.task}</TaskTitle>
       </TaskContainer>
-      <StyledDivider />
-    </>
+    </Swipeable>
   );
 }
 
 const TaskContainer = styled.View`
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   flex-direction: row;
   align-items: center;
-`;
-
-const StyledDivider = styled(Divider)`
-  background-color: red;
+  background-color: ${({theme}) => theme.colors.task};
+  padding: 10px;
+  border-bottom-width: 1.5px;
+  border-color: ${({theme, important}) =>
+    important ? 'green' : theme.colors.divider};
+  margin-bottom: 20px;
 `;
 
 const TaskTitle = styled.Text`
   color: ${({theme}) => theme.colors.font};
+  font-size: ${({important}) => (important ? '20px' : '18px')};
+  font-weight: ${({important}) => (important ? 'bold' : 'normal')};
+`;
+
+const StyledRectButton = styled(RectButton)`
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;

@@ -5,6 +5,7 @@ import {DrawerActions} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import SideBar from '../components/SideBar';
 import Home from '../screens/Home';
+import Settings from '../screens/Settings';
 import {ThemeContext} from '../helpers';
 
 const Stack = createStackNavigator();
@@ -39,6 +40,17 @@ const MainStack = () => {
         component={Home}
         options={({navigation}) => ({
           title: 'Home',
+          ...getHeaderStyle(currentTheme),
+          headerRight: () => (
+            <Hamburger navigation={navigation} theme={currentTheme} />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={({navigation}) => ({
+          title: 'Settings',
           ...getHeaderStyle(currentTheme),
           headerRight: () => (
             <Hamburger navigation={navigation} theme={currentTheme} />

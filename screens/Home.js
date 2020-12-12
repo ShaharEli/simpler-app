@@ -34,6 +34,15 @@ export default function Home() {
     } catch {}
   };
 
+  const handleRemove = async (index) => {
+    const previousItems = items.slice();
+    previousItems.splice(index, 1);
+    setItems(previousItems);
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(previousItems));
+    } catch {}
+  };
+
   return (
     <HomeContainer>
       <Title>Simple Tasks</Title>
@@ -42,7 +51,7 @@ export default function Home() {
           <NewUserText>No Task Here...</NewUserText>
         )}
         {items.map((item, i) => (
-          <Task task={item} key={i} />
+          <Task task={item} handleRemove={handleRemove} index={i} key={i} />
         ))}
       </ItemsList>
       <Modal
@@ -62,7 +71,7 @@ export default function Home() {
 
 const ItemsList = styled.ScrollView`
   height: 100%;
-  padding: 30px;
+  padding: 10px;
 `;
 
 const NewUserText = styled.Text`
