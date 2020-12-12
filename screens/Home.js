@@ -54,7 +54,6 @@ export default function Home() {
         : '';
       for (let date of dates) {
         if (date.valueOf() > new Date().valueOf()) {
-          console.log(date);
           PushNotification.localNotificationSchedule({
             channelId: 'channel-id',
             title: 'Simple notification',
@@ -65,7 +64,6 @@ export default function Home() {
       }
     }
   }, [items, notificationsConfig]);
-  // console.log(getTimestamp(20));
 
   const handleRemove = async (index) => {
     const previousItems = items.slice();
@@ -94,7 +92,7 @@ export default function Home() {
         <AddItem addItem={addItem} />
       </Modal>
       {!visible && (
-        <Button style={{marginTop: 30}} onPress={showModal}>
+        <Button style={{marginTop: 30, marginBottom: 40}} onPress={showModal}>
           Add Task
         </Button>
       )}

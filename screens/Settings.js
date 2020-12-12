@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {RNNumberSelector} from 'react-native-number-selector';
 import {NotificationsContext, arrOfdays, arrOfhours} from '../helpers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {View} from 'react-native';
 
 export default function Settings() {
   const {notificationsConfig, setNotificationsConfig} = useContext(
@@ -50,32 +51,37 @@ export default function Settings() {
   return (
     <Container>
       <Title>Simple Settings</Title>
-      <ChooserTitle>Choose notifications frequency (by days)</ChooserTitle>
-      <RNNumberSelector
-        style={{left: 0, width: '100%', height: 80}}
-        items={arrOfdays}
-        selectedItem={selectedDays}
-        spacing={50}
-        highlightedFontSize={45}
-        fontSize={30}
-        textColor={'grey'}
-        highlightedTextColor="#fcc80c"
-        viewAnimation={0}
-        onChange={handleDaysChange}
-      />
-      <ChooserTitle>Choose notifications hour</ChooserTitle>
-      <RNNumberSelector
-        style={{left: 0, width: '100%', height: 80}}
-        items={arrOfhours}
-        selectedItem={currentTimestamp}
-        spacing={50}
-        highlightedFontSize={45}
-        fontSize={30}
-        textColor={'grey'}
-        highlightedTextColor="#fcc80c"
-        viewAnimation={0}
-        onChange={handleTimestampChange}
-      />
+      <View>
+        <ChooserTitle>Choose notifications frequency (by days)</ChooserTitle>
+        <RNNumberSelector
+          style={{left: 0, width: '100%', height: 80}}
+          items={arrOfdays}
+          selectedItem={selectedDays}
+          spacing={50}
+          highlightedFontSize={45}
+          fontSize={30}
+          textColor={'grey'}
+          highlightedTextColor="#fcc80c"
+          viewAnimation={0}
+          onChange={handleDaysChange}
+        />
+      </View>
+      <View>
+        <ChooserTitle>Choose notifications hour</ChooserTitle>
+        <RNNumberSelector
+          style={{left: 0, width: '100%', height: 80}}
+          items={arrOfhours}
+          selectedItem={currentTimestamp}
+          spacing={50}
+          highlightedFontSize={45}
+          fontSize={30}
+          textColor={'grey'}
+          highlightedTextColor="#fcc80c"
+          viewAnimation={0}
+          onChange={handleTimestampChange}
+        />
+      </View>
+      <View></View>
     </Container>
   );
 }
@@ -86,6 +92,7 @@ const ChooserTitle = styled.Text`
 `;
 const Container = styled.SafeAreaView`
   flex: 1;
+  justify-content: space-between;
   background-color: ${({theme}) => theme.colors.background};
 `;
 
