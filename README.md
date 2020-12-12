@@ -4,12 +4,14 @@
 
 <br />
 
-#### Do you have some stuff on your mind that you want to remember but in the same time they are not so important that you put alert to remember them? if so this app is for you, you will get notify just to remember without specific time for the tasks.
+### Do you have some stuff on your mind that you want to remember but in the same time they are not so important that you put alert to remember them? if so this app is for you, you will get notify just to remember without specific time for the tasks.
 
 <br />
-### Add your simple tasks, set up the notification schedule how you like and enjoy!
+
+#### Add your simple tasks, set up the notification schedule how you like and enjoy!
 
 <br />
+<hr/>
 <br />
 
 ## Here`s some photos from the simpler app:
