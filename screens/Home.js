@@ -50,7 +50,7 @@ export default function Home() {
         }
       }
       const importantMsg = important
-        ? `and ${important} of them are kind of important`
+        ? `and ${important} of them ${important > 1 && 'are '}kind of important`
         : '';
       for (let date of dates) {
         if (date.valueOf() > new Date().valueOf()) {
