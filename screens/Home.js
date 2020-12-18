@@ -107,7 +107,8 @@ export default function Home() {
       )}
       <Snackbar
         visible={snackbarShown}
-        duration={1500}
+        duration={1800}
+        style={{backgroundColor: 'grey'}}
         onDismiss={() => setSnackbarShown(false)}>
         Simple task copied to your clipboard
       </Snackbar>
