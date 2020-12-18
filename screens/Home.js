@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
-import {Modal, Button} from 'react-native-paper';
+import {Modal, Button, Snackbar} from 'react-native-paper';
 import AddItem from '../components/AddItem';
 import Task from '../components/Task';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,8 +11,11 @@ export default function Home() {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [snackbarShown, setSnackbarShown] = useState(false);
+
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
   const {notificationsConfig} = useContext(NotificationsContext);
   useEffect(() => {
     (async () => {
@@ -82,7 +85,13 @@ export default function Home() {
           <NewUserText>No Task Here...</NewUserText>
         )}
         {items.map((item, i) => (
-          <Task task={item} handleRemove={handleRemove} index={i} key={i} />
+          <Task
+            task={item}
+            setSnackbarShown={setSnackbarShown}
+            handleRemove={handleRemove}
+            index={i}
+            key={i}
+          />
         ))}
       </ItemsList>
       <Modal
@@ -96,6 +105,12 @@ export default function Home() {
           Add Task
         </Button>
       )}
+      <Snackbar
+        visible={snackbarShown}
+        duration={1500}
+        onDismiss={() => setSnackbarShown(false)}>
+        Simple task copied to your clipboard
+      </Snackbar>
     </HomeContainer>
   );
 }

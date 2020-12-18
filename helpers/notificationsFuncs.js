@@ -2,13 +2,15 @@ const hour = 60 * 60 * 1000;
 
 export const day = hour * 24;
 
+const NOTIFICATIONS_COUNT = 30;
+
 export const getTimestamp = (notificationHour, days) => {
   const today = new Date();
   const currentHour = today.getHours();
   const diff = notificationHour - currentHour;
   const sevenNotifications = [];
   let i = 0;
-  while (i < 7) {
+  while (i < NOTIFICATIONS_COUNT) {
     sevenNotifications.push(
       new Date(today.valueOf() + hour * diff + days * day * i),
     );

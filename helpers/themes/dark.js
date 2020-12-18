@@ -6,5 +6,6 @@ export const darkTheme = {
     font: 'white',
     divider: 'red',
     task: '#003847',
+    textInput: 'black',
   },
 };

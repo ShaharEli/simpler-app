@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
+import Clipboard from '@react-native-community/clipboard';
 
-export default function Task({task, handleRemove, index}) {
-  const renderRightActions = (progress, dragX) => {
+export default function Task({task, handleRemove, index, setSnackbarShown}) {
+  const renderRightActions = (progress) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [100, 0],
@@ -26,10 +27,17 @@ export default function Task({task, handleRemove, index}) {
     );
   };
 
+  const handleClipBoard = () => {
+    Clipboard.setString(task.task);
+    setSnackbarShown(true);
+  };
+
   return (
-    <Swipeable renderLeftActions={renderRightActions}>
+    <Swipeable renderRightActions={renderRightActions}>
       <TaskContainer important={task.important}>
-        <TaskTitle important={task.important}>{task.task}</TaskTitle>
+        <TaskTitle onPress={handleClipBoard} important={task.important}>
+          {task.task}
+        </TaskTitle>
       </TaskContainer>
     </Swipeable>
   );
