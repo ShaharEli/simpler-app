@@ -4,6 +4,11 @@
 
 <br />
 
+### [Check the app in the playstore](https://play.google.com/store/apps/details?id=com.simpletasksnotifier&gl=IL)
+
+<br />
+
+
 ### Do you have some stuff on your mind that you want to remember but in the same time they are not so important that you put alert to remember them? if so this app is for you, you will get notify just to remember without specific time for the tasks.
 
 <br />
